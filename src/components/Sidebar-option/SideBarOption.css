@@ -1,0 +1,29 @@
+.SidebarOption{
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    cursor: pointer;
+    padding-left: 2px;
+}
+
+.SidebarOption:hover{
+    background-color: #340e36;
+    opacity: 0.9;
+}
+
+.SidebarOption-Icon{
+    padding: 10px;
+    font-size: 15px !important;
+}
+
+.SidebarOption-Channel{
+    padding: 10px 0;
+}
+
+.sidebarOption-hash{
+    padding: 10px;
+}
+
+.SidebarOption > h3{
+    font-weight: 500;
+}
