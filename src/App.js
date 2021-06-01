@@ -1,18 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './App.css'
 import Header from './components/Header/Header'
 import Sidebar from './components/Sidebar/Sidebar'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Chat from './components/Chat/Chat'
+import Login from './components/auth/Login'
+import { useStateValue } from './StateProvider'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 function App() {
-	const [user, setUser] = useState('null')
+	const [{ user }, dispatch] = useStateValue()
+
 	return (
 		// BEM Naming convention
 		<div className='App'>
 			<Router>
 				{!user ? (
-					<h1>Login Page</h1>
+					<Login />
 				) : (
 					<>
 						<Header />
