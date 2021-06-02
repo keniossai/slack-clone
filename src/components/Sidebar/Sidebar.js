@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import {
-    Add,
+	Add,
 	Apps,
 	BookmarkBorder,
 	Create,
 	Drafts,
 	ExpandLess,
-    ExpandMore,
+	ExpandMore,
 	FiberManualRecord,
 	FileCopy,
 	Inbox,
@@ -16,20 +16,23 @@ import {
 import './Sidebar.css'
 import SidebarOption from '../Sidebar-option/SidebarOption'
 import db from '../../Firebase'
+import { useStateValue } from '../../StateProvider'
 
 function Sidebar() {
+	const [channels, setChannels] = useState([])
+	const [{ user }] = useStateValue()
 
-    const [channels, setChannels ] = useState([])
-
-    useEffect(() => {
-        // Run this code once when the sidebar components loads
-        db.collection('rooms').onSnapshot(snapshot => (
-            setChannels(snapshot.docs.map((doc) => ({
-                id: doc.id,
-                name: doc.data().name
-            })))
-        ))
-    }, [])
+	useEffect(() => {
+		// Run this code once when the sidebar components loads
+		db.collection('rooms').onSnapshot((snapshot) =>
+			setChannels(
+				snapshot.docs.map((doc) => ({
+					id: doc.id,
+					name: doc.data().name,
+				}))
+			)
+		)
+	}, [])
 	return (
 		<div className='sidebar'>
 			<div className='sidebar-header'>
@@ -37,7 +40,7 @@ function Sidebar() {
 					<h2>Dev Workspace</h2>
 					<h3>
 						<FiberManualRecord />
-						Kenneth Ossai
+						{user?.displayName}
 					</h3>
 				</div>
 				<Create />
@@ -50,14 +53,14 @@ function Sidebar() {
 			<SidebarOption Icon={Apps} title='Apps' />
 			<SidebarOption Icon={FileCopy} title='File Browser' />
 			<SidebarOption Icon={ExpandLess} title='Show less' />
-            <hr />
-            <SidebarOption Icon={ExpandMore} title='Channels' />
-            <hr />
-            <SidebarOption Icon={Add} addChannelOption title='Add Channel' />
-            {/* Connect to Database list all channels */}
-            {channels.map(channel => (
-                <SidebarOption title={channel.name} id={channel.id} />
-            ))}
+			<hr />
+			<SidebarOption Icon={ExpandMore} title='Channels' />
+			<hr />
+			<SidebarOption Icon={Add} addChannelOption title='Add Channel' />
+			{/* Connect to Database list all channels */}
+			{channels.map((channel) => (
+				<SidebarOption title={channel.name} id={channel.id} />
+			))}
 		</div>
 	)
 }

@@ -4,27 +4,27 @@ import { Avatar } from '@material-ui/core'
 import { AccessTime, HelpOutline, Search } from '@material-ui/icons'
 // CSS
 import './Header.css'
+import { useStateValue } from '../../StateProvider'
 
 function Header() {
+	const [{ user }] = useStateValue()
 	return (
 		<div className='header'>
 			<div className='header-left'>
-				{/* Avatar logged in users */}
 				<Avatar
 					className='header-avatar'
-					alt='Kenneth Ossai'
-					src=''
+					alt={user?.displayName}
+					src={user?.photoURL}
 				/>
-                <AccessTime />
-				{/* Time Icon */}
+				<AccessTime />
 			</div>
 			<div className='header-search'>
 				<Search />
-				<input type="text" placeholder='Search slack...' />
+				<input type='text' placeholder='Search slack...' />
 			</div>
 			<div className='header-right'>
-                <HelpOutline />
-            </div>
+				<HelpOutline />
+			</div>
 		</div>
 	)
 }
